@@ -36,9 +36,8 @@ int key_column(char c)
   }
 }
 
-int main()
+void encrypt()
 {
-
   string str;
   cout<<"Enter the string to be encrypted : ";
   cin>>str;
@@ -119,10 +118,24 @@ int main()
 
   for(int i =0; i<row_col_merge.size(); i+=2)
   {
-    result.push_back(key_square[i][i+1]);
+    result.push_back(key_square[row_col_merge[i]][row_col_merge[i+1]]);
   }
 
   cout<<"The encrypted string is : "<<result<<endl;
+}
+
+int main()
+{
+
+  while(1)
+  {
+    int c;
+    cout<<"Encrypt? 0/1 : ";
+    cin>>c;
+    if(c==1)
+    encrypt();
+    else break;
+  }
 
   return 0;
 }
