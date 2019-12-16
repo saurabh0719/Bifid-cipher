@@ -2,9 +2,9 @@
 
 using namespace std;
 
-#define period 3
+#define period 5
 
-char key_square = {{'R','A','N','C','H'},
+char key_square[5][5] = {{'R','A','N','C','H'},
                    {'O','B','D','E','F'},
                    {'G','I','K','L','M'},
                    {'P','Q','S','T','U'},
@@ -36,31 +36,34 @@ int key_column(char c)
   }
 }
 
-char return_key(int i, int j)
-{
-  return key_square[i][j];
-}
-
-void main()
+int main()
 {
 
   string str;
   cout<<"Enter the string to be encrypted : ";
-  getline(cin,str);
+  cin>>str;
+  //cin.ignore();
   vector<int> row;
   vector<int> col;
 
   for(int i =0; i<str.length(); i++)
   {
-    if(str[i]==" ")
-    continue;
+    //if(str[i] == " ")
+    //continue;
 
-    row.push(key_row(str[i]));
-    col.push(key_col(str[i]));
+    row.push_back(key_row(str[i]));
+    col.push_back(key_column(str[i]));
+  }
+
+  for(int i =0; i<row.size(); i++)
+  {
+    cout<<row[i]<<" "<<col[i]<<endl;
   }
 
   int len = row.size();
   len = len/period;
+
+  cout<<"Length/period : "<<len<<endl;
 
   vector<int> row_col_merge;
 
@@ -69,42 +72,57 @@ void main()
   for(int i =0; i<len; i++)
   {
     int curr = j;
-    while(j<=period)
+    while(j<period)
     {
-      row_col_merge.push(row[j]);
+      row_col_merge.push_back(row[j]);
       j++;
     }
     j = curr;
-    while(j<=period)
+    while(j<period)
     {
-      row_col_merge.push(col[j]);
+      row_col_merge.push_back(col[j]);
       j++;
     }
   }
 
-  if(j<row.length()-1)
+  cout<<"Row column merge : "<<endl;
+  for(int i =0; i<row_col_merge.size(); i++)
+  {
+    cout<<row_col_merge[i]<<" ";
+  }
+  cout<<endl;
+
+  if(j<row.size()-1)
   {
     int curr =j;
-    while(j<row.length())
+    while(j<row.size())
     {
-      row_col_merge.push(row[j]);
+      row_col_merge.push_back(row[j]);
       j++;
     }
     j = curr;
-    while(j<col.length())
+    while(j<col.size())
     {
-      row_col_merge.push(col[j]);
+      row_col_merge.push_back(col[j]);
       j++;
     }
   }
+
+  cout<<"Row column merge after adding remaining elements: "<<endl;
+  for(int i =0; i<row_col_merge.size(); i++)
+  {
+    cout<<row_col_merge[i]<<" ";
+  }
+  cout<<endl;
 
   string result;
 
-  for(int i =0; i<row_col_merge.size(); i+2)
+  for(int i =0; i<row_col_merge.size(); i+=2)
   {
-    result.push_back(return_key[i][i+1]);
+    result.push_back(key_square[i][i+1]);
   }
 
   cout<<"The encrypted string is : "<<result<<endl;
 
+  return 0;
 }
