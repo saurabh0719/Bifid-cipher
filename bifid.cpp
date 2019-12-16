@@ -52,6 +52,9 @@ void main()
 
   for(int i =0; i<str.length(); i++)
   {
+    if(str[i]==" ")
+    continue;
+
     row.push(key_row(str[i]));
     col.push(key_col(str[i]));
   }
@@ -95,6 +98,13 @@ void main()
     }
   }
 
+  string result;
 
+  for(int i =0; i<row_col_merge.size(); i+2)
+  {
+    result.push_back(return_key[i][i+1]);
+  }
+
+  cout<<"The encrypted string is : "<<result<<endl;
 
 }
