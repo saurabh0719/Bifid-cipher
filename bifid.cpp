@@ -67,21 +67,24 @@ void encrypt()
   vector<int> row_col_merge;
 
   int j =0;
+  int curr = 0;
+  int increment =0;
 
   for(int i =0; i<len; i++)
   {
-    int curr = j;
-    while(j<period)
+    curr = j;
+    while(j - increment<period)
     {
       row_col_merge.push_back(row[j]);
       j++;
     }
     j = curr;
-    while(j<period)
+    while(j - increment<period)
     {
       row_col_merge.push_back(col[j]);
       j++;
     }
+    increment += period;
   }
 
   cout<<"Row column merge : "<<endl;
@@ -91,9 +94,11 @@ void encrypt()
   }
   cout<<endl;
 
+  curr = 0;
+
   if(j<row.size()-1)
   {
-    int curr =j;
+    curr =j;
     while(j<row.size())
     {
       row_col_merge.push_back(row[j]);
