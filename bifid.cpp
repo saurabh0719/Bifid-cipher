@@ -54,15 +54,15 @@ void encrypt()
     col.push_back(key_column(str[i]));
   }
 
-  /*for(int i =0; i<row.size(); i++)
+  for(int i =0; i<row.size(); i++)
   {
     cout<<row[i]<<" "<<col[i]<<endl;
-  }*/
+  }
 
   int len = row.size();
   len = len/period;
 
-  //cout<<"Length/period : "<<len<<endl;
+  cout<<"Length/period : "<<len<<endl;
 
   vector<int> row_col_merge;
 
@@ -87,12 +87,12 @@ void encrypt()
     increment += period;
   }
 
-  /*cout<<"Row column merge : "<<endl;
+  cout<<"Row column merge : "<<endl;
   for(int i =0; i<row_col_merge.size(); i++)
   {
     cout<<row_col_merge[i]<<" ";
   }
-  cout<<endl;*/
+  cout<<endl;
 
   curr = 0;
 
@@ -112,12 +112,12 @@ void encrypt()
     }
   }
 
-  /*cout<<"Row column merge after adding remaining elements: "<<endl;
+  cout<<"Row column merge after adding remaining elements: "<<endl;
   for(int i =0; i<row_col_merge.size(); i++)
   {
     cout<<row_col_merge[i]<<" ";
   }
-  cout<<endl;*/
+  cout<<endl;
 
   string result;
 
@@ -145,36 +145,52 @@ void decrypt()
     row_col_merge.push_back(key_column(str[i]));
   }
 
-  int len = (row_col_merge.size())/period;
-  if(len%2 !=0)
+  cout<<"Row column merge : "<<endl;
+  for(int i =0; i<row_col_merge.size(); i++)
+  cout<<row_col_merge[i]<<" ";
+  cout<<endl;
+
+  int len = row_col_merge.size()/period;
+  if(len%2 != 0)
   len--;
 
-  int j =0;
   int i =0;
 
-  for(i =0; i<row_col_merge.size() && len>0; i++)
+  for(i =0; i<len*period;i+=(2*period))
   {
-    j=0;
-    while(j<period)
+    int count = 0;
+    while(count<period && (i+count)<len*period)
     {
-      row.push_back(row_col_merge[i]);
-      j++;
+      row.push_back(row_col_merge[i+count]);
+      count++;
     }
-    j=0;
-    while(j<period)
-    {
-      col.push_back(row_col_merge[j]);
-      j++;
-    }
-    len--;
   }
 
-  len = (row_col_merge.size() - i)/2;
+  for(i =period; i<len*period;i+=(2*period))
+  {
+    int count = 0;
+    while(count<period && (i+count)<len*period)
+    {
+      col.push_back(row_col_merge[i+count]);
+      count++;
+    }
+  }
 
-  for(;i<=len;i++)
+  len = row_col_merge.size() - len*2*period;
+
+  for(i=len*2*period; i<=row_col_merge.size() - len/2; i++)
   row.push_back(row_col_merge[i]);
-  for(;i<row_col_merge.size();i++)
-  col.push_back(row_col_merge[j]);
+  for(;i<row_col_merge.size(); i++)
+  col.push_back(row_col_merge[i]);
+
+  cout<<"Row : "<<endl;
+  for(int k =0; k<row.size(); k++)
+  cout<<row[i]<<" ";
+  cout<<endl;
+  cout<<"column : "<<endl;
+  for(int k =0; k<col.size(); k++)
+  cout<<col[i]<<" ";
+  cout<<endl;
 
   len = row.size();
   string result;
